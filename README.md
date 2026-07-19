@@ -18,6 +18,10 @@ readable reference implementation.
              not guarantee future results."
 ```
 
+The same review in the web UI:
+
+![warrant-mini web UI — a reviewed influencer post with risk-tiered findings](docs/screenshot-web-results.png)
+
 ---
 
 ## 60-second quickstart
@@ -146,6 +150,8 @@ the new planner is genuinely nicer to use."
 `warrant-mini serve` launches a single-page FastAPI app (textarea + results
 panel) that calls the exact same `checker.review()` as the CLI — see
 `warrant_mini/web.py`.
+
+![warrant-mini web UI — the input form with an example loaded](docs/screenshot-web-form.png)
 
 - `POST /api/review` `{ "text": "..." }` → the same findings JSON as `--json`.
 - `GET /?example=fintech` prefills the textarea with an example.
