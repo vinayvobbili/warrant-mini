@@ -213,5 +213,11 @@ driving the code, tests, and this README.
 
 ---
 
+## License
+
+[MIT](LICENSE) © 2026 Vinay Vobbilichetty
+
+---
+
 _This is a demo / portfolio piece, not legal advice. The rule library is a small,
 illustrative subset of real marketing-compliance obligations._

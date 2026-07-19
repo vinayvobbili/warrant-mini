@@ -3,6 +3,8 @@ name = "warrant-mini"
 version = "0.1.0"
 description = "A miniature AI marketing-compliance checker — risk-tiered findings with reasoning traces and suggested fixes."
 readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.11"
 dependencies = [
     "anthropic>=0.69",
