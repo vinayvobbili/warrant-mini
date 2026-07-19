@@ -24,8 +24,12 @@ from .models import Finding, ReviewResult, Rule, _JudgeResponse
 from .prompts import SYSTEM_PROMPT, build_user_prompt
 from .rules import rule_index, rules_by_group
 
-DEFAULT_MODEL = "claude-sonnet-5"  # you asked for sonnet; swap to claude-opus-4-8 here for more depth
-_MAX_TOKENS = 4096
+DEFAULT_MODEL = "claude-opus-4-8"  # swap to claude-sonnet-5 here for lower cost
+# Adaptive thinking gives the judge better calibration; on Opus 4.8 thinking is
+# off unless requested, so we enable it explicitly. Thinking shares this budget
+# with the JSON output, so keep generous headroom — a verbose rule-group can
+# otherwise truncate the structured output mid-object and fail to parse.
+_MAX_TOKENS = 12000
 
 
 class MissingAPIKey(RuntimeError):
@@ -70,6 +74,7 @@ def _run_group(
     response = client.messages.parse(
         model=model,
         max_tokens=_MAX_TOKENS,
+        thinking={"type": "adaptive"},
         system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": build_user_prompt(rules, copy)}],
         output_format=_JudgeResponse,

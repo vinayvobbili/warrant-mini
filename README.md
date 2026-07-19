@@ -8,17 +8,11 @@ with a reasoning trace and a suggested fix for each.
 Inspired by what [Warrant](https://hellowarrant.com) does, built as a compact,
 readable reference implementation.
 
-```
- P1 · critical         Fair and balanced investment communications
- regulation  FINRA Rule 2210 (Communications with the Public)
- offending   “guaranteed 12% annual returns with zero risk”
- why         Promissory, guarantees future returns, and omits risk disclosure.
- fix         "Historically our Growth Portfolio has returned ~X%. All investing
-             carries risk, including loss of principal; past performance does
-             not guarantee future results."
-```
+The CLI (`warrant-mini check`) on a snippet of planted violations:
 
-The same review in the web UI:
+![warrant-mini CLI output — risk-tiered findings for planted violations](docs/screenshot-cli.png)
+
+…and the same engine as a web app (`warrant-mini serve`):
 
 ![warrant-mini web UI — a reviewed influencer post with risk-tiered findings](docs/screenshot-web-results.png)
 
@@ -81,7 +75,7 @@ Editing the rule set is a YAML change — no code.
 ```
 input_loader → checker (per-group LLM judge passes) → verify → rich CLI / JSON
      │              │                                     │
- text/file/URL   claude-sonnet-5, structured outputs   drop fabricated findings
+ text/file/URL   claude-opus-4-8, structured outputs   drop fabricated findings
 ```
 
 - **`input_loader.py`** — resolves pasted text, a file path, or a URL (fetched
@@ -177,7 +171,7 @@ uv run pytest        # smoke tests — rule library, judge schema, quote verifie
 ```
 
 Swap the model in one place: `DEFAULT_MODEL` in `warrant_mini/checker.py`
-(`claude-sonnet-5` → `claude-opus-4-8` for deeper review).
+(`claude-opus-4-8` → `claude-sonnet-5` for lower cost).
 
 ---
 
@@ -186,9 +180,9 @@ Swap the model in one place: `DEFAULT_MODEL` in `warrant_mini/checker.py`
 An AI-native build: specified once, then implemented end-to-end with Claude Code
 driving the code, tests, and this README.
 
-- **Time:** ~1 hour, single session (CLI + web UI + docs).
+- **Time:** ~2 hours, single session (CLI + web UI + docs).
 - **Model used to build:** Claude Code (Opus).
-- **Model the app judges with:** `claude-sonnet-5`.
+- **Model the app judges with:** `claude-opus-4-8` (adaptive thinking on).
 - **Workflow:**
   - **Plan-first.** Wrote `PLAN.md`, locked the design decisions (per-rule-group
     passes, structured outputs, the anti-hallucination contract), and got
