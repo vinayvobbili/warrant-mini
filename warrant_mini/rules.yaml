@@ -1,0 +1,122 @@
+# warrant-mini rule library
+# ~8 real marketing-compliance rules. Each is grouped so the checker can run one
+# focused LLM judge pass per group. Citations are real regulations — the judge is
+# instructed never to cite anything outside this file.
+
+- id: ftc-endorsement
+  name: Endorsement / testimonial disclosure
+  regulation: FTC 16 CFR Part 255 (Guides Concerning Use of Endorsements and Testimonials)
+  group: disclosure
+  severity_default: P2
+  description: >
+    Any material connection between an endorser and the advertiser (payment, free
+    product, employment, affiliate commission, family relationship) must be
+    clearly and conspicuously disclosed near the endorsement. Influencer posts
+    require a clear disclosure such as "#ad" or "Paid partnership"; vague tags
+    like "#sp" or a buried "thanks to our partner" are not sufficient.
+  violation_examples:
+    - "Loving my new @brand serum!! link in bio 💕 (no disclosure of a paid partnership)"
+    - "Our customers say it's life-changing — here's what Jane, a paid brand ambassador, told us (connection not disclosed)"
+
+- id: ftc-free-negative-option
+  name: '"Free" claims and negative-option billing clarity'
+  regulation: FTC Act Section 5 + ROSCA (Restore Online Shoppers' Confidence Act)
+  group: claims
+  severity_default: P2
+  description: >
+    "Free" offers must disclose any obligation to buy or any recurring charge
+    that follows. Negative-option / auto-renewal terms (free trial that converts
+    to a paid subscription) must be clearly and conspicuously disclosed before
+    the customer pays, with the material terms up front — not buried in fine print.
+  violation_examples:
+    - "Start your FREE trial today! (no mention that it auto-converts to $49/mo)"
+    - "Get it FREE — just pay separate processing (undisclosed recurring charge)"
+
+- id: finra-2210
+  name: Fair and balanced investment communications
+  regulation: FINRA Rule 2210 (Communications with the Public)
+  group: financial
+  severity_default: P1
+  description: >
+    Communications about investment products must be fair and balanced, must not
+    be promissory or exaggerated, must not omit material risk, and must not
+    predict or guarantee future returns. Claims of performance require a balanced
+    treatment of risk. Language like "guaranteed returns", "risk-free investing",
+    or "can't lose" is prohibited.
+  violation_examples:
+    - "Guaranteed 12% annual returns with zero risk"
+    - "Our fund never has a down year — invest now before you miss out (omits risk disclosure)"
+
+- id: reg-dd-apy
+  name: APY / APR advertising accuracy
+  regulation: Regulation DD / Truth in Savings Act (12 CFR 1030)
+  group: financial
+  severity_default: P2
+  description: >
+    Advertised deposit rates must use the term "Annual Percentage Yield" (APY)
+    and state it accurately. If a rate is promotional or tiered, the ad must
+    disclose the conditions (minimum balance, time period, whether it is
+    introductory). Stating an interest rate without the required APY, or a
+    headline rate without its conditions, is a violation.
+  violation_examples:
+    - "Earn 5% on your savings! (no APY term, no conditions disclosed)"
+    - "5.00% APY!* (asterisk leads to no disclosed minimum-balance or promotional-period terms)"
+
+- id: fdic-ncua-insured
+  name: '"FDIC insured" / "NCUA insured" claim accuracy'
+  regulation: FDIC Part 328 / NCUA Part 740 (advertising of insured status)
+  group: financial
+  severity_default: P1
+  description: >
+    Claims of federal deposit insurance must be accurate and not misleading.
+    Non-banks, fintechs, and crypto products must not state or imply that they
+    themselves are FDIC/NCUA insured when they are not, and must not imply that
+    insurance covers investment losses or market risk. "FDIC insured" applied to
+    a non-deposit or a non-insured entity is a serious violation.
+  violation_examples:
+    - "Your crypto is FDIC insured — invest with total peace of mind"
+    - "This investment account is NCUA insured against loss (implies coverage of market losses)"
+
+- id: sweepstakes-disclosure
+  name: Sweepstakes / contest disclosure basics
+  regulation: FTC + state sweepstakes law (e.g. no-purchase-necessary requirement)
+  group: disclosure
+  severity_default: P3
+  description: >
+    Sweepstakes and contests must disclose the material terms: "No purchase
+    necessary", eligibility, entry deadline / end date, odds or number of prizes,
+    and a way to find official rules. A prize promotion that implies a purchase
+    improves the odds, or that omits "no purchase necessary", is a violation.
+  violation_examples:
+    - "Buy now for your chance to win a car! (implies purchase is required to enter)"
+    - "Enter to win $10,000! (no official rules, no end date, no eligibility terms)"
+
+- id: superlative-substantiation
+  name: Superlative claims requiring substantiation
+  regulation: FTC Act Section 5 (deceptive advertising — substantiation doctrine)
+  group: claims
+  severity_default: P3
+  description: >
+    Objective superlative or absolute claims — "best", "#1", "guaranteed",
+    "clinically proven", "the safest", "instant results" — require prior
+    substantiation. Unsupported superlatives presented as fact are deceptive.
+    (Pure subjective puffery like "we think it's delightful" is generally allowed;
+    flag claims a reasonable consumer would read as a verifiable fact.)
+  violation_examples:
+    - "The #1 rated platform in the world, guaranteed to double your productivity"
+    - "Clinically proven to work instantly (no study cited or substantiation implied)"
+
+- id: disclaimer-proximity
+  name: Required-disclaimer proximity
+  regulation: FTC .com Disclosures guidance (clear and conspicuous standard)
+  group: claims
+  severity_default: P3
+  description: >
+    A disclosure that qualifies a claim must be clear and conspicuous and placed
+    near the claim it modifies — not buried in a footer, hidden behind an
+    asterisk with no visible fine print, in a much smaller font, or separated
+    from the claim it qualifies. A headline claim whose only qualifier is a
+    detached asterisk or a distant footnote violates the proximity requirement.
+  violation_examples:
+    - "Lose 20 lbs in a week!* (asterisk's disclaimer appears only in a page-bottom footer)"
+    - "0% APR forever** (** terms are on a separate page the reader never sees)"
